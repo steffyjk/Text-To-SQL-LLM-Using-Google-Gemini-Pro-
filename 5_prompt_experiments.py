@@ -20,14 +20,6 @@ def get_gemini_response(question, prompt):
     # Remove any prefix like "SQL: " or similar
     if query.lower().startswith("sql:"):
         query = query[4:].strip()
-
-    # # Extract the SQL query by stripping out any unwanted text
-    # query = response.text.strip()
-
-    # # Remove any prefix like "SQL: " or similar
-    # if query.lower().startswith("sql:"):
-    #     query = query[4:].strip()
-
     return query
 
 
@@ -94,6 +86,34 @@ part of the explanation section.
 below tools to construct your query and final answer.
 - Do not make up table names, only use the tables returned by any of the
 tools below.
+
+Note: 
+
+1. as of the response just reply with SQL query only, Please be strict regarding your response, it should be sql query only no other things.
+example of response: 
+SELECT
+  table_name,
+  column_name,
+  data_type
+FROM information_schema.columns;
+
+2. This is the DB schema 
+CREATE TABLE PERSON_DETAILS(
+    NAME VARCHAR(25),
+    TECH VARCHAR(25),
+    POSITION VARCHAR(25),
+    YEARS_OF_EXPERIENCE INT)
+
+your sql query should be rely on this only
+
+3. Please be smart regarding SQL query,
+
+Q: give me all details regarding Steffy  [ or any other example]
+Ans should not be SELECT
+  *
+FROM PERSON_DETAILS
+WHERE
+  NAME = "Steffy"; It should be the Name which Contains Steffy
 
 ## Tools:
 
